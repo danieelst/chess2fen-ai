@@ -30,7 +30,7 @@ The developed model is a Convolutional Neural Network, with the following layers
 
 ```
 _________________________________________________________________
- Layer (type)                Output Shape              Param #
+ Layer (type)                 Output Shape             Param #
 =================================================================
  input_1 (InputLayer)         [(None, 32, 32, 1)]      0
 
