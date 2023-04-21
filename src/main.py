@@ -3,6 +3,7 @@ from sys import exit
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from fen.gen import random_fen_str
+from fen.fen import verify_fen_str
 from viz.image import fen_str_to_image,save_image,open_image
 from ai.model import predict_board
 
@@ -32,6 +33,9 @@ if __name__=='__main__':
     if not fen_str:
       fen_str = random_fen_str()
       print(f'Randomizing FEN-string: {fen_str}')
+    if not verify_fen_str(fen_str):
+      print('FEN-string is not valid')
+      exit(-1)
     img_arr = fen_str_to_image(fen_str)
     save_image(img_arr, INPUT_IMAGE_PATH)
     print(f'\nConverting to board, see {Path(INPUT_IMAGE_PATH).resolve()}')

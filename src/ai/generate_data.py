@@ -5,7 +5,7 @@ from random import shuffle
 from viz.image import open_image
 from viz.processing import add_filter,image_to_grayscale,split_into_squares
 import viz.filters as filters
-from fen.fen import DATA_FEN,LABELS,fen_str_to_arr
+from fen.fen import DATA_FEN,LABELS,fen_str_to_1d_arr
 
 from paths import PATH_TO_STYLES
 
@@ -38,7 +38,7 @@ def get_piece_label_pairs():
   grayscaled_pieces = flatten([split_into_squares(img_arr) for img_arr
                                                            in grayscaled_img_arrs])
   # Make a list of labels corresponding to the list of pieces above
-  labels = fen_str_to_arr(DATA_FEN) * len(all_img_arrs)
+  labels = fen_str_to_1d_arr(DATA_FEN) * len(all_img_arrs)
   print(f'Generated {len(grayscaled_pieces)} (image-of-piece,label) pairs')
   # Shuffle the pieces and labels while still maintaining symmetry
   list_to_shuffle = list(zip(grayscaled_pieces,labels))

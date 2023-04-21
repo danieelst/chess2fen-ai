@@ -4,6 +4,7 @@ the model.
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from fen.gen import random_fen_str
+from fen.fen import verify_fen_str
 from viz.image import fen_str_to_image
 from argparse import ArgumentParser
 from tensorflow.keras.models import load_model
@@ -20,6 +21,11 @@ if __name__=='__main__':
   fen_strs = []
   for i in range(0,N_TESTS):
     fen_strs.append(random_fen_str())
+  if all([verify_fen_str(fen_str) for fen_str in fen_strs]):
+    print('All generated FEN-strings are valid')
+  else:
+    print('Not all generated FEN-strings are valid')
+    exit(-1)
   img_arrs = [fen_str_to_image(fen_str) for fen_str in fen_strs]
   model = load_model(PATH_TO_LATEST_MODEL)
   print('Predicting...')

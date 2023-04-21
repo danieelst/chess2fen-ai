@@ -37,8 +37,12 @@ def to_black(piece):
 def is_black(piece):
   return piece.islower()
 
-def fen_str_to_arr(fen_str):
-  return list(''.join(['x' * 8 if p == '8' else p for p in fen_str if p != '/']))
+def fen_str_to_1d_arr(fen_str):
+  return [p for row in fen_str_to_2d_arr(fen_str) for p in row]
+
+def fen_str_to_2d_arr(fen_str):
+  expanded = ''.join(['x' * int(p) if p.isdigit() else p for p in fen_str])
+  return [row for row in expanded.split('/')]
 
 def arr_to_fen_str(arr):
   return to_fen_str([(EMPTY_LABEL,None) if p==EMPTY_LABEL else
@@ -78,3 +82,11 @@ def to_fen_str(board):
 
 def fen_str_to_name(fen_str):
  return fen_str.replace('/','-')
+
+def verify_fen_str(fen_str):
+  arr = fen_str_to_2d_arr(fen_str)
+  # Array is 8x8
+  is8x8 = len(arr) == 8 and all([len(row) == 8 for row in arr])
+  # Array only contains valid labels
+  hasValidLabels = all([p in LABELS for row in arr for p in row])
+  return is8x8 and hasValidLabels
