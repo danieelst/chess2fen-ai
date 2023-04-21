@@ -1,6 +1,6 @@
 # ♟ chess2fen-ai ♟
 
-Calculate the FEN-string of an `NxN` PNG-image of a chess board.
+Calculate the FEN-string of an `NxN` image of a chess board.
 
 The image will be scaled to the size `256x256`, grayscaled and naïvely divided into an `8x8` grid of `32x32` size images (i.e. one image per square in the board). The piece in each square will be determined by the model, and when each square has been determined, a FEN-string will be computed.
 
