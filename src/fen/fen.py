@@ -42,7 +42,7 @@ def fen_str_to_1d_arr(fen_str):
 
 def fen_str_to_2d_arr(fen_str):
   expanded = ''.join(['x' * int(p) if p.isdigit() else p for p in fen_str])
-  return [row for row in expanded.split('/')]
+  return list(expanded.split('/'))
 
 def arr_to_fen_str(arr):
   return to_fen_str([(EMPTY_LABEL,None) if p==EMPTY_LABEL else
@@ -81,12 +81,12 @@ def to_fen_str(board):
   return '/'.join([row_to_fen_str(row) for row in rows])
 
 def fen_str_to_name(fen_str):
- return fen_str.replace('/','-')
+  return fen_str.replace('/','-')
 
 def verify_fen_str(fen_str):
   arr = fen_str_to_2d_arr(fen_str)
   # Array is 8x8
-  is8x8 = len(arr) == 8 and all([len(row) == 8 for row in arr])
+  is_8x8 = len(arr) == 8 and all(len(row) == 8 for row in arr)
   # Array only contains valid labels
-  hasValidLabels = all([p in LABELS for row in arr for p in row])
-  return is8x8 and hasValidLabels
+  has_valid_labels = all(p in LABELS for row in arr for p in row)
+  return is_8x8 and has_valid_labels

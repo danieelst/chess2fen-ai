@@ -1,12 +1,10 @@
-import numpy as np
 from pathlib import Path
 from random import shuffle
-
 from viz.image import open_image
 from viz.processing import add_filter,image_to_grayscale,split_into_squares
-import viz.filters as filters
-from fen.fen import DATA_FEN,LABELS,fen_str_to_1d_arr
-
+from viz import filters
+from viz.processing import normalize_images
+from fen.fen import DATA_FEN,fen_str_to_1d_arr
 from paths import PATH_TO_STYLES
 
 def flatten(list_of_lists):
@@ -45,30 +43,6 @@ def get_piece_label_pairs():
   shuffle(list_to_shuffle)
   pieces, labels = zip(*list_to_shuffle)
   return pieces,labels
-
-def normalize_image(img_arr):
-  return img_arr / 255.0
-
-def normalize_images(img_arrs):
-  return np.asarray([normalize_image(img_arr) for img_arr in img_arrs])
-
-# Mapping from label to integer
-label_to_int = dict((l,i) for i,l in enumerate(LABELS))
-int_to_label = dict((i,l) for i,l in enumerate(LABELS))
-
-# One-hot encoded label
-def encode_label(label):
-  zeros = np.zeros(len(LABELS))
-  zeros[label_to_int[label]] = 1
-  return zeros
-
-# Encode a list of labels
-def encode_labels(labels):
-  return np.asarray([encode_label(label) for label in labels])
-
-# Decode one-hot encoded label
-def decode_output(output):
-  return int_to_label[np.argmax(output)]
 
 # Convert from an image array of a board, into input data
 def board_to_input(img_arr):

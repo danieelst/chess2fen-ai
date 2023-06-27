@@ -1,9 +1,9 @@
+from io import BytesIO
 import numpy as np
 from PIL import Image
 from chess import Board
-import chess.svg as svg
+from chess import svg
 from cairosvg import svg2png
-from io import BytesIO
 
 SIZE=256
 

@@ -1,0 +1,14 @@
+[tool.pylint.main]
+disable = ["missing-module-docstring",
+           "missing-function-docstring",
+           "missing-class-docstring"]
+
+# Pylint can not import Keras somehow
+ignored-modules = "tensorflow.keras"
+
+[tool.pylint]
+good-names = ["Piece_To_FEN_Label_Model","Color_To_Move_Model"]
+good-names-rgxs = "^[_a-z][_a-z0-9]?$"
+
+[tool.pylint.format]
+indent-string = "  "

@@ -1,0 +1,1 @@
+pylint --rcfile pyproject.toml --recursive y src

@@ -28,3 +28,9 @@ def add_filter(img_arr, color_filter):
   color_filter = Image.new('RGB',img.size,color_filter)
   mask = Image.new('RGBA',img.size,(0,0,0,123)) # Alpha channel mask
   return to_array(Image.composite(img,color_filter,mask).convert('RGB'))
+
+def normalize_image(img_arr):
+  return img_arr / 255.0
+
+def normalize_images(img_arrs):
+  return np.asarray([normalize_image(img_arr) for img_arr in img_arrs])
