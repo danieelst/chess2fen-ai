@@ -14,11 +14,11 @@ Using image `/examples/input.png`:
 
 We compute the FEN-string with `python3 main.py -i ../examples/input.png`.
 
-The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - ? ? 33`, which can be converted into the following image:
+The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - - ? 33`, which can be converted into the following image:
 
 ![Image of predicted board](examples/output.png "Prediction")
 
-## Models
+## Models and Computations
 
 All models are developed with TensorFlow and Keras, see [card.md](card.md) for more information.
 
@@ -31,16 +31,18 @@ Example run:
 ```
 Evaluated 1024 examples
 'Board' accuracy: 1.0
-'Active color' accuracy: 0.537109375
-'Castling availability' accuracy: 0.998046875
-'Full move clock' accuracy: 0.3493959637027726
+'Active color' accuracy: 0.5732421875
+'Castling availability' accuracy: 0.9970703125
+'En passant' accuracy: 1.0
+'Full move clock' accuracy: 0.3491355535330279
 ```
 
 ## Drawbacks
+
   * Since the program assumes that the board has already been cropped to an `NxN` image of only the board, "excess stuff" will cause problems.
   * The model can struggle a little bit when being provided with images using piece styles other than the provided in `/styles`.
   * Castling availability is naïvely computed (i.e. it is considered valid as long as the pieces are in their original squares).
-  * No support for en passant.
+  * En passant is always assumed to not be possible.
   * No support for the half-move clock yet.
 
 ## Getting images of chess boards

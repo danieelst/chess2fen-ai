@@ -6,6 +6,8 @@ From this, the castling availability will be naïvely determined (i.e. simply ch
 
 From the board data, the amount of moves made will be determined with the `Move_Counter` model. With this we can compute the active color and the full-move clock.
 
+En passant square is always assumed to be negative.
+
 ## `Piece_To_FEN_Label` model
 
 Expects a `32x32`, normalized and grayscaled image of square from a chess board, and will predict the label corresponding to the content of the square (i.e. either a piece or empty). The output is a one-hot encoded array corresponding to the 13 classes (six types of pieces of two possible colors, and the empty square).

@@ -13,7 +13,8 @@ def predict(img_arrs):
   move_counts = predict_move_counts(board_strs, MC_MODEL)
   castling_options = [naively_check_castling_availability(board) for board in board_strs]
   colors = [determine_active_color(move_count) for move_count in move_counts]
-  en_passants = half_moves = list('?' * len(img_arrs))
+  en_passants = list('-' * len(img_arrs)) # assume that en passant is not possible
+  half_moves = list('?' * len(img_arrs))
   full_moves = [str(calculate_full_move_clock(move_count)) for move_count in move_counts]
   fens = zip(board_strs,colors,castling_options,en_passants,half_moves,full_moves)
   return [' '.join(fen) for fen in fens]

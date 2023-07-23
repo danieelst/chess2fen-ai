@@ -38,6 +38,7 @@ def evaluate():
   boards      = 0
   colors      = 0
   castlings   = 0
+  en_passants = 0
   full_clocks = 0
 
   print(f'Evaluating {count} FEN-strings...')
@@ -46,9 +47,10 @@ def evaluate():
     xs = [fen_str_to_image(fen_str) for fen_str in batch]
     ys = predict(xs)
     for x,y in zip(batch,ys):
-      boards += get_part(x, Part.BOARD)        == get_part(y, Part.BOARD)
+      boards += get_part(x, Part.BOARD) == get_part(y, Part.BOARD)
       colors += get_part(x, Part.ACTIVE_COLOR) == get_part(y, Part.ACTIVE_COLOR)
-      castlings += get_part(x, Part.CASTLING)  == get_part(y, Part.CASTLING)
+      castlings += get_part(x, Part.CASTLING) == get_part(y, Part.CASTLING)
+      en_passants += get_part(x, Part.EN_PASSANT) == get_part(y, Part.EN_PASSANT)
       clock_x = int(get_part(x, Part.FULL_MOVE_CLOCK))
       clock_y = int(get_part(y, Part.FULL_MOVE_CLOCK))
       clock_x1 = clock_x
@@ -62,6 +64,7 @@ def evaluate():
   print(f"'Board' accuracy: {boards/count}")
   print(f"'Active color' accuracy: {colors/count}")
   print(f"'Castling availability' accuracy: {castlings/count}")
+  print(f"'En passant' accuracy: {en_passants/count}")
   print(f"'Full move clock' accuracy: {full_clocks/count}")
 
 if __name__=='__main__':
