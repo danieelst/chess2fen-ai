@@ -30,11 +30,12 @@ Example run:
 
 ```
 Evaluated 1024 examples
-'Board' accuracy: 1.0
-'Active color' accuracy: 0.5732421875
-'Castling availability' accuracy: 0.9970703125
-'En passant' accuracy: 1.0
-'Full move clock' accuracy: 0.3491355535330279
+'Board' accuracy: 1.000
+'Active color' accuracy: 0.550
+'Castling availability' accuracy: 0.996
+'En passant' accuracy: 0.999
+'Full move clock' count accuracy: 0.000
+'Full move clock' offset accuracy: 0.352
 ```
 
 ## Drawbacks
