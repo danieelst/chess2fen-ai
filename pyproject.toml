@@ -7,7 +7,7 @@ disable = ["missing-module-docstring",
 ignored-modules = "tensorflow.keras"
 
 [tool.pylint]
-good-names = ["Piece_To_FEN_Label_Model","Color_To_Move_Model"]
+good-names = ["Piece_To_FEN_Label_Model","Move_Counter_Model","X"]
 good-names-rgxs = "^[_a-z][_a-z0-9]?$"
 
 [tool.pylint.format]

@@ -1,6 +1,7 @@
 from load_model import load_model
-from paths import PATH_TO_LATEST_MODEL
+from paths import PIECE_TO_FEN_LABEl_MODEL,MOVE_COUNTER_MODEL
 
 if __name__=='__main__':
-  model = load_model(PATH_TO_LATEST_MODEL)
-  model.summary()
+  load_model(PIECE_TO_FEN_LABEl_MODEL).summary()
+  print()
+  load_model(MOVE_COUNTER_MODEL).summary()

@@ -1,5 +1,5 @@
 Pillow
 pathlib
-tensorflow
 chess
 cairosvg
+zstandard

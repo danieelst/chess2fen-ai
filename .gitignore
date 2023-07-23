@@ -2,3 +2,5 @@ __pycache__
 models
 input.png
 output.png
+*.pgn.zst
+*.txt

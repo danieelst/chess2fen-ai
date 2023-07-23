@@ -1,0 +1,13 @@
+version: '1.0'
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/chess2fen-ai
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

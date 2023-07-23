@@ -4,8 +4,8 @@ from viz.image import open_image
 from viz.processing import add_filter,image_to_grayscale,split_into_squares
 from viz import filters
 from viz.processing import normalize_images
-from fen.fen import DATA_FEN,fen_str_to_1d_arr
-from paths import PATH_TO_STYLES
+from fen.board import DATA_BOARD_STR,str_to_1d_arr
+from paths import STYLES
 
 def flatten(list_of_lists):
   return [item for sublist in list_of_lists for item in sublist]
@@ -17,9 +17,9 @@ def create_filtered_images(img_arrs, filt):
 def get_piece_label_pairs():
   # Get all images
   og_img_arrs = []
-  for p in Path(PATH_TO_STYLES).glob('*.png'):
+  for p in Path(STYLES).glob('*.png'):
     print(f'Retrieving chess piece style "{p.stem}"...')
-    fp = Path(PATH_TO_STYLES,p.name)
+    fp = Path(STYLES,p.name)
     og_img_arrs.append(open_image(fp))
   all_img_arrs = []
   all_img_arrs.extend(og_img_arrs)
@@ -36,7 +36,7 @@ def get_piece_label_pairs():
   grayscaled_pieces = flatten([split_into_squares(img_arr) for img_arr
                                                            in grayscaled_img_arrs])
   # Make a list of labels corresponding to the list of pieces above
-  labels = fen_str_to_1d_arr(DATA_FEN) * len(all_img_arrs)
+  labels = str_to_1d_arr(DATA_BOARD_STR) * len(all_img_arrs)
   print(f'Generated {len(grayscaled_pieces)} (image-of-piece,label) pairs')
   # Shuffle the pieces and labels while still maintaining symmetry
   list_to_shuffle = list(zip(grayscaled_pieces,labels))

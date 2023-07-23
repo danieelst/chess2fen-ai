@@ -1,11 +1,13 @@
 import tensorflow as tf
 from tensorflow.keras import Input,Model,layers
 from tensorflow.keras.losses import mean_squared_error
-from fen.fen import arr_to_fen_str
-from fen.encoding import encode_labels,decode_output
-from ai.piece_to_fen.generate_data import board_to_input,get_piece_label_pairs,normalize_images
-from paths import PATH_TO_LATEST_MODEL
+from fen.board import arr_to_str,encode_labels,decode_output
+from ai.piece_to_fen_label.generate_data import (board_to_input,
+                                                 get_piece_label_pairs,
+                                                 normalize_images)
+from paths import PIECE_TO_FEN_LABEl_MODEL
 
+NAME='piece_to_fen_label_model'
 
 INPUT_SHAPE=(32,32,1)
 OUTPUT_SHAPE=6*2+1 # Six chess piece types of two colors and the empty squares
@@ -23,7 +25,7 @@ def Piece_To_FEN_Label_Model():
 
   outputs = layers.Dense(OUTPUT_SHAPE)(x)
 
-  return Model(inputs=inputs, outputs=outputs, name='piece2fen_label_model')
+  return Model(inputs=inputs, outputs=outputs, name=NAME)
 
 # Given a picture of the board, predict the FEN-string
 def predict_board(img_arr, model):
@@ -37,9 +39,9 @@ def predict_boards(img_arrs, model):
   # Divide the output into sections of size 64 (i.e. each square in a board)
   ys = [ys[i:i+64] for i in range(0,len(ys),64)]
   # Decode each section
-  return [arr_to_fen_str([decode_output(p) for p in y]) for y in ys]
+  return [arr_to_str([decode_output(p) for p in y]) for y in ys]
 
-def train_model():
+def train_model(batch_size=32, epochs=5):
   pieces,labels = get_piece_label_pairs()
   normalized_pieces = normalize_images(pieces)
   encoded_labels = encode_labels(labels)
@@ -54,11 +56,13 @@ def train_model():
 
   model = Piece_To_FEN_Label_Model()
 
+  model.summary()
+
   model.compile(optimizer='adam',
                 loss=mean_squared_error,
                 metrics=['accuracy'])
 
-  model.fit(x_train,y_train,epochs=5)
+  model.fit(x_train,y_train,batch_size=batch_size,epochs=epochs)
   model.evaluate(x_test,y_test,verbose=2)
 
-  model.save(PATH_TO_LATEST_MODEL)
+  model.save(PIECE_TO_FEN_LABEl_MODEL)

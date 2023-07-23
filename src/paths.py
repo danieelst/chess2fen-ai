@@ -1,6 +1,11 @@
 from pathlib import Path
 
-PATH_TO_STYLES       = Path('../styles').resolve()
-PATH_TO_LATEST_MODEL = Path('../models/latest').resolve()
-INPUT_IMAGE_PATH     = Path('../input.png').resolve()
-OUTPUT_IMAGE_PATH    = Path('../output.png').resolve()
+STYLES                      = Path('../styles').resolve()
+MODELS                      = Path('../models').resolve()
+PIECE_TO_FEN_LABEl_MODEL    = Path(MODELS, 'piece_to_fen_label').resolve()
+MOVE_COUNTER_MODEL          = Path(MODELS, 'move_counter').resolve()
+INPUT_IMAGE                 = Path('../input.png').resolve()
+OUTPUT_IMAGE                = Path('../output.png').resolve()
+LICHESS_GAME_DATA_PGN       = Path('../lichess/lichess_game_data.pgn.zst')
+LICHESS_GAME_DATA_TRAIN_TXT = Path('../lichess/lichess_game_data_train.txt')
+LICHESS_GAME_DATA_TEST_TXT  = Path('../lichess/lichess_game_data_test.txt')

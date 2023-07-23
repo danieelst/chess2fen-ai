@@ -1,8 +1,10 @@
 # ♟ chess2fen-ai ♟
 
-Calculate the FEN-string of an `NxN` image of a chess board.
+Forsyth–Edwards Notation (FEN) is a representation of an instance in a chess game. It allows you to represent the board state (red), the color-to-make-a-move (orange), the castling availability (green), the en passant option (light blue), the half-move clock (blue) and the full-move clock (purple).
 
-The image will be scaled to the size `256x256`, grayscaled and naïvely divided into an `8x8` grid of `32x32` size images (i.e. one image per square in the board). The piece in each square will be determined by the model, and when each square has been determined, a FEN-string will be computed.
+![Starting position in FEN](examples/starting-fen.png "Starting position in FEN")
+
+In this project, we aim to calculate the FEN-string of an `NxN` image of a digital chess board.
 
 ## Example
 
@@ -10,81 +12,49 @@ Using image `/examples/input.png`:
 
 ![6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7](examples/input.png "6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7")
 
-We can run the model with `python3 main.py -i ../examples/input.png`.
+We compute the FEN-string with `python3 main.py -i ../examples/input.png`.
 
-The model will predict the following FEN-string: `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7`
-
-Which can be converted into the following image:
+The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - ? ? 33`, which can be converted into the following image:
 
 ![Image of predicted board](examples/output.png "Prediction")
 
-## Getting images of chess boards
+## Models
 
-The approach I use is to go to [https://lichess.org/editor](https://lichess.org/editor) and insert the desired FEN-string. From there, select the desired piece style and theme. Then in Firefox, right-click on the page, and select `Take Screenshot`. Hover over the board element and select it. This will give a perfect `NxN` image of the chess board.
+All models are developed with TensorFlow and Keras, see [card.md](card.md) for more information.
 
-## Model
+## Evaluation
 
-Expects a `32x32`, normalized and grayscaled image of square from a chess board, and will predict the label corresponding to the content of the square (i.e. either a piece or empty). The output is a one-hot encoded array corresponding to the 13 classes (six types of pieces of two possible colors, and the empty square).
-
-The developed model is a Convolutional Neural Network, with the following layers:
-
-```
-_________________________________________________________________
- Layer (type)                 Output Shape             Param #
-=================================================================
- input_1 (InputLayer)         [(None, 32, 32, 1)]      0
-
- conv2d (Conv2D)              (None, 30, 30, 32)       320
-
- max_pooling2d (MaxPooling2D) (None, 15, 15, 32)       0
-
- conv2d_1 (Conv2D)            (None, 13, 13, 64)       18496
-
- flatten (Flatten)            (None, 10816)            0
-
- dense (Dense)                (None, 64)               692288
-
- dense_1 (Dense)              (None, 13)               845
-
-=================================================================
-Total params: 711,949
-Trainable params: 711,949
-Non-trainable params: 0
-_________________________________________________________________
-```
-
-## Training
-
-The model can be trained by running `python3 train.py`. The data for the model will be automatically generated.
-
-### Data generation
-
-I have captured a `256x256` PNG-image of each piece style available in Lichess (with some exceptions), with the default theme, using the FEN-string `kkKKqqQQ/rrRRbbBB/nnNNppPP/8/8/8/8/8`. These are available in `/styles`.
-
-For each image, we apply a handful of filters to create new images (e.g. applying a green mask, thus creating a greener chess board image).
-
-These are then grayscaled, normalized and divided into `8x8` grids. Each image in the grid is given a label of which piece it is in accordance to the FEN-string.
-
-## Using the model
-
-The model can be used with `python3 main.py`, where you have three options:
-  * Provide the command line argument `-i` with path to an image, e.g. `-i /examples/input.png`.
-  * Provide the command line argument `-f` with a valid FEN-string, e.g. `-f rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR`. The program will then generate an image for you.
-  * Provide no command line argument, in which case the program will randomize a FEN-string.
-
-## Testing the model
-
-The model can be humbly tested with `python3 test.py`, which will automatically generate `100` FEN-strings, convert them to images and compare the model's predictions of the images to the generated strings. (The optional command line argument `-n` can be used to set the desired amount of randomized strings).
+The model can be humbly tested with `python3 evaluate.py`, which will read FEN-strings from the preloaded `lichess_game_data_test.txt` file, convert them to images, and compare the predicted FEN-strings to the original. Use `-n` to set the size of the test.
 
 Example run:
 
 ```
-Generating 100 cases...
-Predicting...
-1/1 [==============================] - 1s 1s/step
-100 ✓, 0 X
+Evaluated 1024 examples
+'Board' accuracy: 1.0
+'Active color' accuracy: 0.537109375
+'Castling availability' accuracy: 0.998046875
+'Full move clock' accuracy: 0.3493959637027726
 ```
 
 ## Drawbacks
   * Since the program assumes that the board has already been cropped to an `NxN` image of only the board, "excess stuff" will cause problems.
   * The model can struggle a little bit when being provided with images using piece styles other than the provided in `/styles`.
+  * Castling availability is naïvely computed (i.e. it is considered valid as long as the pieces are in their original squares).
+  * No support for en passant.
+  * No support for the half-move clock yet.
+
+## Getting images of chess boards
+
+The approach I use is to go to [https://lichess.org/editor](https://lichess.org/editor) and insert the desired FEN-string. From there, select the desired piece style and theme. Then in Firefox, right-click on the page, and select `Take Screenshot`. Hover over the board element and select it. This will give a perfect `NxN` image of the chess board.
+
+## Downloading Lichess game data
+
+Visit [https://database.lichess.org/](https://database.lichess.org/) and download the `.pgn.zst` of choice. Then, simply replace the empty file `lichess_game_data.pgn.zst` in `/lichess` with the new file using the same name.
+
+I used January 2015, but any other should work equally well.
+
+To train the models using your downloaded data, start by preloading the data using `preload_lichess_data.py`. This will generate `lichess_game_data_train.txt` and `lichess_game_data_test.txt`, containing one million randomly selected FEN-strings each.
+
+## Using the container
+
+With Docker started, run `docker compose run --rm app` to start a container. The project files are mounted to your local files, so any changes made will be reflected in the container (e.g. updated code) and vice versa (e.g. saved models).
