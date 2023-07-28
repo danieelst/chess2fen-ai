@@ -20,4 +20,4 @@ if __name__=='__main__':
     MODEL = None
     if args['continue']:
       MODEL = load_model(MOVE_COUNTER_MODEL)
-    mc.train_model(model=MODEL, data_size=-1, batch_size=256, epochs=1)
+    mc.train_model(model=MODEL, data_size=200000, batch_size=128, epochs=1)

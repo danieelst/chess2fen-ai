@@ -43,7 +43,7 @@ def evaluate():
   castlings          = 0
   en_passants        = 0
   full_clocks_count  = 0
-  full_clocks_offset = 0
+  full_clocks_acc    = 0
 
   print(f'Evaluating {count} FEN-strings...')
   for i in range(0, count, 128):
@@ -62,7 +62,7 @@ def evaluate():
       # We want the same accuracy even if the predicted number is larger
       if clock_x < clock_y:
         clock_x1 *= 2
-      full_clocks_offset += (clock_x1 - clock_y) / clock_x
+      full_clocks_acc += 1- (clock_x1 - clock_y) / clock_x
 
   print('\n' + ('-' * 80))
   print(f"Evaluated {count} examples")
@@ -71,7 +71,7 @@ def evaluate():
   print(f"'Castling availability' accuracy: {castlings/count:.3f}")
   print(f"'En passant' accuracy: {en_passants/count:.3f}")
   print(f"'Full move clock' count accuracy: {full_clocks_count/count:.3f}")
-  print(f"'Full move clock' offset accuracy: {full_clocks_offset/count:.3f}")
+  print(f"'Full move clock' offset accuracy: {full_clocks_acc/count:.3f}")
 
 if __name__=='__main__':
   evaluate()

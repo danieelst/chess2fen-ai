@@ -53,21 +53,29 @@ _________________________________________________________________
 
  flatten (Flatten)           (None, 832)               0
 
- dense (Dense)               (None, 128)               106624
+ dense (Dense)               (None, 2048)              1705984
 
- dense_1 (Dense)             (None, 64)                8256
+ dense_1 (Dense)             (None, 1024)              2098176
 
- dense_2 (Dense)             (None, 32)                2080
+ dense_2 (Dense)             (None, 512)               524800
 
- dense_3 (Dense)             (None, 16)                528
+ dense_3 (Dense)             (None, 256)               131328
 
- dense_4 (Dense)             (None, 8)                 136
+ dense_4 (Dense)             (None, 128)               32896
 
- dense_5 (Dense)             (None, 1)                 9
+ dense_5 (Dense)             (None, 64)                8256
+
+ dense_6 (Dense)             (None, 32)                2080
+
+ dense_7 (Dense)             (None, 16)                528
+
+ dense_8 (Dense)             (None, 8)                 136
+
+ dense_9 (Dense)             (None, 1)                 9
 
 =================================================================
-Total params: 117633 (459.50 KB)
-Trainable params: 117633 (459.50 KB)
+Total params: 4504193 (17.18 MB)
+Trainable params: 4504193 (17.18 MB)
 Non-trainable params: 0 (0.00 Byte)
 _________________________________________________________________
 ```

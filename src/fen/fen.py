@@ -12,7 +12,7 @@ class Part(Enum):
   FULL_MOVE_CLOCK = 5
 
 def get_part(fen_str, part):
-  return fen_str.split(' ')[part.value]
+  return fen_str.split(' ')[part.value].strip()
 
 def calculate_number_of_moves_made(active_color, full_move_clock):
   full_move_clock = int(full_move_clock) * 2

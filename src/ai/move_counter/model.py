@@ -2,7 +2,7 @@ from random import shuffle
 import numpy as np
 from tensorflow.keras import Input,Model,layers
 from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.losses import mean_squared_error
+from tensorflow.keras.losses import mean_absolute_error
 from paths import MOVE_COUNTER_MODEL
 from ai.move_counter.data_generator import DataGenerator,file_size,OUTPUT_SHAPE
 from fen.board import str_to_1d_arr,encode_labels
@@ -21,11 +21,15 @@ round_v = np.vectorize(round)
 def Move_Counter_Model():
   inputs = Input(shape=INPUT_SHAPE)
   x = layers.Flatten()(inputs)
-  x = layers.Dense(128, activation='relu')(x)
-  x = layers.Dense(64, activation='relu')(x)
-  x = layers.Dense(32, activation='relu')(x)
-  x = layers.Dense(16, activation='relu')(x)
-  x = layers.Dense(8, activation='relu')(x)
+  x = layers.Dense(2048, activation='relu')(x)
+  x = layers.Dense(1024, activation='relu')(x)
+  x = layers.Dense(512,  activation='relu')(x)
+  x = layers.Dense(256,  activation='relu')(x)
+  x = layers.Dense(128,  activation='relu')(x)
+  x = layers.Dense(64,   activation='relu')(x)
+  x = layers.Dense(32,   activation='relu')(x)
+  x = layers.Dense(16,   activation='relu')(x)
+  x = layers.Dense(8,    activation='relu')(x)
   output = layers.Dense(OUTPUT_SHAPE)(x)
   return Model(inputs=inputs, outputs=output, name=NAME)
 
@@ -58,7 +62,7 @@ def train_model(model=None, data_size=-1, batch_size=128, epochs=3):
   model.summary()
 
   model.compile(optimizer='adam',
-                loss=mean_squared_error,
+                loss=mean_absolute_error,
                 metrics=['accuracy'])
 
   model.fit(train_generator,

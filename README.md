@@ -14,7 +14,7 @@ Using image `/examples/input.png`:
 
 We compute the FEN-string with `python3 main.py -i ../examples/input.png`.
 
-The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - - ? 33`, which can be converted into the following image:
+The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - - ? 34`, which can be converted into the following image:
 
 ![Image of predicted board](examples/output.png "Prediction")
 
@@ -31,11 +31,11 @@ Example run:
 ```
 Evaluated 1024 examples
 'Board' accuracy: 1.000
-'Active color' accuracy: 0.550
-'Castling availability' accuracy: 0.996
+'Active color' accuracy: 0.595
+'Castling availability' accuracy: 0.997
 'En passant' accuracy: 0.999
-'Full move clock' count accuracy: 0.000
-'Full move clock' offset accuracy: 0.352
+'Full move clock' count accuracy: 0.373
+'Full move clock' offset accuracy: 0.667
 ```
 
 ## Drawbacks
