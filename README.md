@@ -14,7 +14,7 @@ Using image `/examples/input.png`:
 
 We compute the FEN-string with `python3 main.py -i ../examples/input.png`.
 
-The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 b - - ? 34`, which can be converted into the following image:
+The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 w - - 2 27`, which can be converted into the following image:
 
 ![Image of predicted board](examples/output.png "Prediction")
 
@@ -24,18 +24,20 @@ All models are developed with TensorFlow and Keras, see [card.md](card.md) for m
 
 ## Evaluation
 
-The model can be humbly tested with `python3 evaluate.py`, which will read FEN-strings from the preloaded `lichess_game_data_test.txt` file, convert them to images, and compare the predicted FEN-strings to the original. Use `-n` to set the size of the test.
+The model can be evaluated with `python3 evaluate.py`, which will read FEN-strings from the preloaded `lichess_game_data_test.txt` file, convert them to images, and compare the predicted FEN-strings to the originals. Use `-n` to set the size of the test.
 
 Example run:
 
 ```
 Evaluated 1024 examples
 'Board' accuracy: 1.000
-'Active color' accuracy: 0.595
+'Active color' accuracy: 0.668
 'Castling availability' accuracy: 0.997
-'En passant' accuracy: 0.999
-'Full move clock' count accuracy: 0.373
-'Full move clock' offset accuracy: 0.667
+'En passant' accuracy: 0.998
+'Halfmove clock' accuracy: 0.168
+Mean 'halfmove clock' difference: 1.799
+'Fullmove clock' accuracy: 0.056
+Mean 'fullmove clock' difference: 4.754
 ```
 
 ## Drawbacks
@@ -44,7 +46,7 @@ Evaluated 1024 examples
   * The model can struggle a little bit when being provided with images using piece styles other than the provided in `/styles`.
   * Castling availability is naïvely computed (i.e. it is considered valid as long as the pieces are in their original squares).
   * En passant is always assumed to not be possible.
-  * No support for the half-move clock yet.
+  * The move counters have not been fully developed and trained yet.
 
 ## Getting images of chess boards
 

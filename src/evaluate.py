@@ -32,18 +32,24 @@ def read_data():
 def compare_part(x,y,part):
   return get_part(x, part) == get_part(y, part)
 
+def compute_diff(x,y,part):
+  return abs(int(get_part(x, part)) - int(get_part(y, part)))
+
+#pylint: disable=too-many-locals
 def evaluate():
   fen_strs = read_data()
 
   count = len(fen_strs)
 
   # Correct counter
-  boards             = 0
-  colors             = 0
-  castlings          = 0
-  en_passants        = 0
-  full_clocks_count  = 0
-  full_clocks_acc    = 0
+  boards          = 0
+  colors          = 0
+  castlings       = 0
+  en_passants     = 0
+  halfclocks      = 0
+  halfclocks_diff = 0
+  fullclocks      = 0
+  fullclocks_diff = 0
 
   print(f'Evaluating {count} FEN-strings...')
   for i in range(0, count, 128):
@@ -51,18 +57,14 @@ def evaluate():
     xs = [fen_str_to_image(fen_str) for fen_str in batch]
     ys = predict(xs)
     for x,y in zip(batch,ys):
-      boards            += compare_part(x,y,Part.BOARD)
-      colors            += compare_part(x,y,Part.ACTIVE_COLOR)
-      castlings         += compare_part(x,y,Part.CASTLING)
-      en_passants       += compare_part(x,y,Part.EN_PASSANT)
-      full_clocks_count += compare_part(x,y,Part.FULL_MOVE_CLOCK)
-      clock_x = int(get_part(x, Part.FULL_MOVE_CLOCK))
-      clock_y = int(get_part(y, Part.FULL_MOVE_CLOCK))
-      clock_x1 = clock_x
-      # We want the same accuracy even if the predicted number is larger
-      if clock_x < clock_y:
-        clock_x1 *= 2
-      full_clocks_acc += 1- (clock_x1 - clock_y) / clock_x
+      boards          += compare_part(x,y,Part.BOARD)
+      colors          += compare_part(x,y,Part.ACTIVE_COLOR)
+      castlings       += compare_part(x,y,Part.CASTLING)
+      en_passants     += compare_part(x,y,Part.EN_PASSANT)
+      halfclocks      += compare_part(x,y,Part.HALFMOVE_CLOCK)
+      halfclocks_diff += compute_diff(x,y,Part.HALFMOVE_CLOCK)
+      fullclocks      += compare_part(x,y,Part.FULLMOVE_CLOCK)
+      fullclocks_diff += compute_diff(x,y,Part.FULLMOVE_CLOCK)
 
   print('\n' + ('-' * 80))
   print(f"Evaluated {count} examples")
@@ -70,8 +72,10 @@ def evaluate():
   print(f"'Active color' accuracy: {colors/count:.3f}")
   print(f"'Castling availability' accuracy: {castlings/count:.3f}")
   print(f"'En passant' accuracy: {en_passants/count:.3f}")
-  print(f"'Full move clock' count accuracy: {full_clocks_count/count:.3f}")
-  print(f"'Full move clock' offset accuracy: {full_clocks_acc/count:.3f}")
+  print(f"'Halfmove clock' accuracy: {halfclocks/count:.3f}")
+  print(f"Mean 'halfmove clock' difference: {halfclocks_diff/count:.3f}")
+  print(f"'Fullmove clock' accuracy: {fullclocks/count:.3f}")
+  print(f"Mean 'fullmove clock' difference: {fullclocks_diff/count:.3f}")
 
 if __name__=='__main__':
   evaluate()

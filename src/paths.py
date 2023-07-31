@@ -2,8 +2,10 @@ from pathlib import Path
 
 STYLES                      = Path('../styles').resolve()
 MODELS                      = Path('../models').resolve()
-PIECE_TO_FEN_LABEl_MODEL    = Path(MODELS, 'piece_to_fen_label').resolve()
-MOVE_COUNTER_MODEL          = Path(MODELS, 'move_counter').resolve()
+PIECE_CLASSIFIER_MODEL      = Path(MODELS, 'piece_classifier').resolve()
+COLOR_CLASSIFIER_MODEL      = Path(MODELS, 'color_classifier').resolve()
+FULLMOVE_COUNTER_MODEL      = Path(MODELS, 'fullmove_counter').resolve()
+HALFMOVE_COUNTER_MODEL      = Path(MODELS, 'halfmove_counter').resolve()
 INPUT_IMAGE                 = Path('../input.png').resolve()
 OUTPUT_IMAGE                = Path('../output.png').resolve()
 LICHESS_GAME_DATA_PGN       = Path('../lichess/lichess_game_data.pgn.zst')

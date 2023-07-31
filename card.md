@@ -1,14 +1,12 @@
 # Models and Computations
 
-Given an image, it will be scaled to a size of `256x256` pixels, grayscaled and naïvely divided into an `8x8` grid of `32x32` size images (i.e. one image per square in the board). The piece in each square will be determined by the `Piece_To_FEN_Label` model, and when each square has been determined, the board data can be computed.
+Given an image, it will be scaled to a size of `256x256` pixels, grayscaled and naïvely divided into an `8x8` grid of `32x32` size images (i.e. one image per square in the board). The piece in each square will be determined by the `Piece_Classifier` model, and when each square has been determined, the board data can be computed.
 
-From this, the castling availability will be naïvely determined (i.e. simply check if the kings and rooks have been moved).
+From the board data, the castling availability will be naïvely determined (i.e. simply check if the kings and rooks have been moved), the active color will be determined with the `Color_Classifier` model, and the number of moves made will be determined with the `Halfmove_Counter` model and the `Fullmove_Counter` model.
 
-From the board data, the amount of moves made will be determined with the `Move_Counter` model. With this we can compute the active color and the full-move clock.
+En passant square is always assumed to be negative (which is correct in nearly all cases).
 
-En passant square is always assumed to be negative.
-
-## `Piece_To_FEN_Label` model
+## `Piece_Classifier` model
 
 Expects a `32x32`, normalized and grayscaled image of square from a chess board, and will predict the label corresponding to the content of the square (i.e. either a piece or empty). The output is a one-hot encoded array corresponding to the 13 classes (six types of pieces of two possible colors, and the empty square).
 
@@ -39,9 +37,9 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-## `Move_Counter` model
+## `Color_Classifier` model
 
-Expects an array of 64 one-hot encoded arrays of the 13 aforementioned classes. Will predict the number of moves made using regression.
+Expects an array of 64 one-hot encoded arrays of the 13 aforementioned classes. Will predict one of the two classes: white or black.
 
 The developed model is a fully-connected Neural Network, with the following layers:
 
@@ -53,40 +51,78 @@ _________________________________________________________________
 
  flatten (Flatten)           (None, 832)               0
 
- dense (Dense)               (None, 2048)              1705984
+ dense (Dense)               (None, 128)               106624
 
- dense_1 (Dense)             (None, 1024)              2098176
+ dense_1 (Dense)             (None, 128)               16512
 
- dense_2 (Dense)             (None, 512)               524800
+ dense_2 (Dense)             (None, 128)               16512
 
- dense_3 (Dense)             (None, 256)               131328
-
- dense_4 (Dense)             (None, 128)               32896
-
- dense_5 (Dense)             (None, 64)                8256
-
- dense_6 (Dense)             (None, 32)                2080
-
- dense_7 (Dense)             (None, 16)                528
-
- dense_8 (Dense)             (None, 8)                 136
-
- dense_9 (Dense)             (None, 1)                 9
+ dense_3 (Dense)             (None, 2)                 258
 
 =================================================================
-Total params: 4504193 (17.18 MB)
-Trainable params: 4504193 (17.18 MB)
+Total params: 139906 (546.51 KB)
+Trainable params: 139906 (546.51 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+```
+
+## `Halfmove_Counter` model
+
+Expects an array of 64 one-hot encoded arrays of the 13 aforementioned classes. Will predict the number of halfmoves made.
+
+The developed model is a fully-connected Neural Network, with the following layers:
+
+```
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ input_2 (InputLayer)        [(None, 64, 13)]          0
+
+ flatten_1 (Flatten)         (None, 832)               0
+
+ dense_2 (Dense)             (None, 832)               693056
+
+ dense_3 (Dense)             (None, 1)                 833
+
+=================================================================
+Total params: 693889 (2.65 MB)
+Trainable params: 693889 (2.65 MB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+```
+
+## `Fullmove_Counter` model
+
+Expects an array of 64 one-hot encoded arrays of the 13 aforementioned classes. Will predict the number of fullmoves made.
+
+The developed model is a fully-connected Neural Network, with the following layers:
+
+```
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ input_1 (InputLayer)        [(None, 64, 13)]          0
+
+ flatten (Flatten)           (None, 832)               0
+
+ dense (Dense)               (None, 832)               693056
+
+ dense_1 (Dense)             (None, 1)                 833
+
+=================================================================
+Total params: 693889 (2.65 MB)
+Trainable params: 693889 (2.65 MB)
 Non-trainable params: 0 (0.00 Byte)
 _________________________________________________________________
 ```
 
 ## Training the models
 
-The models can be trained by running `python3 train.py`, using the options `-p2f` for the `Piece_To_FEN_Label` model and `-mc` for the `Move_Counter` model. Only one can be trained at once. Specify `-c` if you wish to train on an exsiting model.
+The models can be trained by running `python3 train.py`, using the options `-pc` for the `Piece_Classifier` model, `-cc` for the `Color_Classifier` model, `-hc` for the `Halfmove_Counter` model and `-fc` for the `Fullmove_Counter` model. Specify `-c` if you wish to train on an exsiting model.
 
-The `Move_Counter` model will train on the data from `lichesss_game_data_train.txt`.
+The `Color_Classifier` model, the `Halfmove_Counter` model and the `Fullmove_Counter` model will train on the data from `lichess_game_data_train.txt`.
 
-The `Piece_To_FEN_Label` model will be trained on images generated with different chess piece stylings and themes, see below:
+The `Piece_Classifier` model will be trained on images generated with different chess piece stylings and themes, see below:
 
 ### Generating chess pieces in different styles
 

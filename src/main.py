@@ -42,8 +42,7 @@ def main():
 
   new_fen_str = predict([img_arr])[0]
   print(f'\nPredicted FEN-string: {new_fen_str}')
-  patched_fen_string = new_fen_str.replace('?','0',1)
-  save_image(fen_str_to_image(patched_fen_string), OUTPUT_IMAGE)
+  save_image(fen_str_to_image(new_fen_str), OUTPUT_IMAGE)
   print(f'\nConverting to board, see {Path(OUTPUT_IMAGE).resolve()}')
 
 if __name__=='__main__':
