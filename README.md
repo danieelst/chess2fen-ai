@@ -8,13 +8,13 @@ In this project, we aim to calculate the FEN-string of an `NxN` image of a digit
 
 ## Example
 
-Using image `/examples/input.png`:
+With the FEN-string `r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R w KQkq - 1 16`, we can render the following image (see `/examples/input.png`):
 
-![6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7](examples/input.png "6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7")
+![r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R](examples/input.png "r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R")
 
-We compute the FEN-string with `python3 main.py -i ../examples/input.png`.
+With this image, we can compute the FEN-string using `python3 main.py -i ../examples/input.png`.
 
-The result of this is `6n1/1b2p2p/8/1BKr2Qk/p3q3/5N2/3P3P/R7 w - - 2 27`, which can be converted into the following image:
+The result of this is `r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R w KQkq - 2 20`, which can be converted into the following image (see `/examples/output.png`):
 
 ![Image of predicted board](examples/output.png "Prediction")
 
