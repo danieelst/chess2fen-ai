@@ -31,13 +31,13 @@ Example run:
 ```
 Evaluated 1024 examples
 'Board' accuracy: 1.000
-'Active color' accuracy: 0.668
-'Castling availability' accuracy: 0.997
-'En passant' accuracy: 0.998
-'Halfmove clock' accuracy: 0.168
-Mean 'halfmove clock' difference: 1.799
-'Fullmove clock' accuracy: 0.056
-Mean 'fullmove clock' difference: 4.754
+'Active color' accuracy: 0.652
+'Castling availability' accuracy: 0.996
+'En passant' accuracy: 0.999
+'Halfmove clock' accuracy: 0.184
+Mean 'halfmove clock' difference: 1.717
+'Fullmove clock' accuracy: 0.309
+Mean 'fullmove clock' difference: 2.163
 ```
 
 ## Drawbacks

@@ -22,7 +22,8 @@ OUTPUT_SHAPE=1
 def Fullmove_Counter_Model():
   inputs = Input(shape=INPUT_SHAPE)
   x = layers.Flatten()(inputs)
-  x = layers.Dense(N_PIECES*N_LABELS, activation='relu')(x)
+  x = layers.Dense(2048, activation='relu')(x)
+  x = layers.Dense(64,   activation='relu')(x)
   output = layers.Dense(OUTPUT_SHAPE)(x)
   return Model(inputs=inputs, outputs=output, name=NAME)
 

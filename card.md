@@ -105,13 +105,15 @@ _________________________________________________________________
 
  flatten (Flatten)           (None, 832)               0
 
- dense (Dense)               (None, 832)               693056
+ dense (Dense)               (None, 2048)              1705984
 
- dense_1 (Dense)             (None, 1)                 833
+ dense_1 (Dense)             (None, 64)                131136
+
+ dense_2 (Dense)             (None, 1)                 65
 
 =================================================================
-Total params: 693889 (2.65 MB)
-Trainable params: 693889 (2.65 MB)
+Total params: 1837185 (7.01 MB)
+Trainable params: 1837185 (7.01 MB)
 Non-trainable params: 0 (0.00 Byte)
 _________________________________________________________________
 ```

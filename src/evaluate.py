@@ -36,7 +36,7 @@ def compute_diff(x,y,part):
   return abs(int(get_part(x, part)) - int(get_part(y, part)))
 
 #pylint: disable=too-many-locals
-def evaluate():
+def evaluate(batch_size=64):
   fen_strs = read_data()
 
   count = len(fen_strs)
@@ -52,8 +52,8 @@ def evaluate():
   fullclocks_diff = 0
 
   print(f'Evaluating {count} FEN-strings...')
-  for i in range(0, count, 128):
-    batch = fen_strs[i:i+128]
+  for i in range(0, count, batch_size):
+    batch = fen_strs[i:i+batch_size]
     xs = [fen_str_to_image(fen_str) for fen_str in batch]
     ys = predict(xs)
     for x,y in zip(batch,ys):

@@ -7,7 +7,7 @@ from load_model import load_model
 from paths import COLOR_CLASSIFIER_MODEL, FULLMOVE_COUNTER_MODEL, HALFMOVE_COUNTER_MODEL
 
 parser = ArgumentParser()
-parser.add_argument('-c', '--continue', action='store_true', help='Continue training')
+parser.add_argument('-c',   '--continue',  action='store_true', help='Continue training')
 parser.add_argument('-pc', f'--{pc.NAME}', action='store_true', help=f'Train {pc.NAME}')
 parser.add_argument('-cc', f'--{cc.NAME}', action='store_true', help=f'Train {cc.NAME}')
 parser.add_argument('-fc', f'--{fc.NAME}', action='store_true', help=f'Train {fc.NAME}')
@@ -26,7 +26,7 @@ if __name__=='__main__':
     MODEL = None
     if args['continue']:
       MODEL = load_model(COLOR_CLASSIFIER_MODEL)
-    cc.train_model(model=MODEL, data_size=-1, batch_size=256, epochs=1)
+    cc.train_model(model=MODEL, data_size=None, batch_size=256, epochs=1)
 
   # Train fullmove counter model
   if args[fc.NAME]:
@@ -34,7 +34,7 @@ if __name__=='__main__':
     MODEL = None
     if args['continue']:
       MODEL = load_model(FULLMOVE_COUNTER_MODEL)
-    fc.train_model(model=MODEL, data_size=10000, batch_size=256, epochs=1)
+    fc.train_model(model=MODEL, data_size=None, batch_size=256, epochs=1)
 
   # Train halfmove counter model
   if args[hc.NAME]:
