@@ -14,7 +14,7 @@ With the FEN-string `r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R w KQkq - 1 
 
 With this image, we can compute the FEN-string using `python3 main.py -i ../examples/input.png`.
 
-The result of this is `r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R w KQkq - 2 20`, which can be converted into the following image (see `/examples/output.png`):
+The result of this is `r3k2r/p4p1p/b1p1pq2/2p5/4pP2/2P3P1/PP5P/RN1QK2R w KQkq - 1 16`, which can be converted into the following image (see `/examples/output.png`):
 
 ![Image of predicted board](examples/output.png "Prediction")
 
