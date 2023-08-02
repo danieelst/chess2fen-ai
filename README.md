@@ -31,13 +31,13 @@ Example run:
 ```
 Evaluated 1024 examples
 'Board' accuracy: 1.000
-'Active color' accuracy: 0.652
-'Castling availability' accuracy: 0.996
-'En passant' accuracy: 0.999
-'Halfmove clock' accuracy: 0.184
-Mean 'halfmove clock' difference: 1.717
-'Fullmove clock' accuracy: 0.309
-Mean 'fullmove clock' difference: 2.163
+'Active color' accuracy: 0.655
+'Castling availability' accuracy: 0.994
+'En passant' accuracy: 1.000
+'Halfmove clock' accuracy: 0.279
+Mean 'halfmove clock' difference: 1.524
+'Fullmove clock' accuracy: 0.307
+Mean 'fullmove clock' difference: 2.233
 ```
 
 ## Drawbacks
@@ -46,7 +46,6 @@ Mean 'fullmove clock' difference: 2.163
   * The model can struggle a little bit when being provided with images using piece styles other than the provided in `/styles`.
   * Castling availability is naïvely computed (i.e. it is considered valid as long as the pieces are in their original squares).
   * En passant is always assumed to not be possible.
-  * The move counters have not been fully developed and trained yet.
 
 ## Getting images of chess boards
 

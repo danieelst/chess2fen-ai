@@ -42,4 +42,4 @@ if __name__=='__main__':
     MODEL = None
     if args['continue']:
       MODEL = load_model(HALFMOVE_COUNTER_MODEL)
-    hc.train_model(model=MODEL, data_size=10000, batch_size=256, epochs=1)
+    hc.train_model(model=MODEL, data_size=None, batch_size=256, epochs=1)

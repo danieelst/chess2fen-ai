@@ -76,17 +76,21 @@ The developed model is a fully-connected Neural Network, with the following laye
 _________________________________________________________________
  Layer (type)                Output Shape              Param #
 =================================================================
- input_2 (InputLayer)        [(None, 64, 13)]          0
+ input_1 (InputLayer)        [(None, 64, 13)]          0
 
- flatten_1 (Flatten)         (None, 832)               0
+ flatten (Flatten)           (None, 832)               0
 
- dense_2 (Dense)             (None, 832)               693056
+ dense (Dense)               (None, 1024)              852992
 
- dense_3 (Dense)             (None, 1)                 833
+ dense_1 (Dense)             (None, 1024)              1049600
+
+ dense_2 (Dense)             (None, 64)                65600
+
+ dense_3 (Dense)             (None, 1)                 65
 
 =================================================================
-Total params: 693889 (2.65 MB)
-Trainable params: 693889 (2.65 MB)
+Total params: 1968257 (7.51 MB)
+Trainable params: 1968257 (7.51 MB)
 Non-trainable params: 0 (0.00 Byte)
 _________________________________________________________________
 ```
