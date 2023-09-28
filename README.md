@@ -61,4 +61,4 @@ To train the models using your downloaded data, start by preloading the data usi
 
 ## Using the container
 
-With Docker started, run `docker compose run --rm app` to start a container. The project files are mounted to your local files, so any changes made will be reflected in the container (e.g. updated code) and vice versa (e.g. saved models).
+With Docker started, run `docker compose run --rm app` to start a container (you can also use `run.sh`). The project files are mounted to your local files, so any changes made will be reflected in the container (e.g. updated code) and vice versa (e.g. saved models).
